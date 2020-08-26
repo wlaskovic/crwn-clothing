@@ -33,13 +33,11 @@ var selectCollectionsForPreview = (0, _reselect.createSelector)([selectCollectio
   });
 });
 exports.selectCollectionsForPreview = selectCollectionsForPreview;
-
-var selectCollection = function selectCollection(collectionUrlParam) {
+var selectCollection = (0, _lodash["default"])(function (collectionUrlParam) {
   return (0, _reselect.createSelector)([selectCollections], function (collections) {
     return collections.find(function (collection) {
       return collection.id === COLLECTION_ID_MAP[collectionUrlParam];
     });
   });
-};
-
+});
 exports.selectCollection = selectCollection;
