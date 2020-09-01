@@ -7,18 +7,6 @@ exports.selectCollection = exports.selectCollectionsForPreview = exports.selectC
 
 var _reselect = require("reselect");
 
-var _lodash = _interopRequireDefault(require("lodash.memoize"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-var COLLECTION_ID_MAP = {
-  hats: 1,
-  sneakers: 2,
-  jackets: 3,
-  womens: 4,
-  mens: 5
-};
-
 var selectShop = function selectShop(state) {
   return state.shop;
 };
@@ -28,16 +16,16 @@ var selectCollections = (0, _reselect.createSelector)([selectShop], function (sh
 });
 exports.selectCollections = selectCollections;
 var selectCollectionsForPreview = (0, _reselect.createSelector)([selectCollections], function (collections) {
-  return Object.keys(collections).map(function (key) {
+  return collections ? Object.keys(collections).map(function (key) {
     return collections[key];
-  });
+  }) : [];
 });
 exports.selectCollectionsForPreview = selectCollectionsForPreview;
-var selectCollection = (0, _lodash["default"])(function (collectionUrlParam) {
+
+var selectCollection = function selectCollection(collectionUrlParam) {
   return (0, _reselect.createSelector)([selectCollections], function (collections) {
-    return collections.find(function (collection) {
-      return collection.id === COLLECTION_ID_MAP[collectionUrlParam];
-    });
+    return collections ? collections[collectionUrlParam] : null;
   });
-});
+};
+
 exports.selectCollection = selectCollection;
