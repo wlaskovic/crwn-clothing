@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.selectCollection = exports.selectCollectionsForPreview = exports.selectCollections = void 0;
+exports.selectIsCollectionsLoaded = exports.selectIsCollectionFetching = exports.selectCollection = exports.selectCollectionsForPreview = exports.selectCollections = void 0;
 
 var _reselect = require("reselect");
 
@@ -29,3 +29,11 @@ var selectCollection = function selectCollection(collectionUrlParam) {
 };
 
 exports.selectCollection = selectCollection;
+var selectIsCollectionFetching = (0, _reselect.createSelector)([selectShop], function (shop) {
+  return shop.isFetching;
+});
+exports.selectIsCollectionFetching = selectIsCollectionFetching;
+var selectIsCollectionsLoaded = (0, _reselect.createSelector)([selectShop], function (shop) {
+  return !!shop.collections;
+});
+exports.selectIsCollectionsLoaded = selectIsCollectionsLoaded;

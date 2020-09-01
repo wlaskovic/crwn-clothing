@@ -16,7 +16,9 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var INITIAL_STATE = {
-  collections: null
+  collections: null,
+  isFetching: false,
+  errorMessage: undefined
 };
 
 var shopReducer = function shopReducer() {
@@ -24,9 +26,21 @@ var shopReducer = function shopReducer() {
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
-    case _shop["default"].UPDATE_COLLECTIONS:
+    case _shop["default"].FETCH_COLLECTIONS_START:
       return _objectSpread({}, state, {
+        isFetching: true
+      });
+
+    case _shop["default"].FETCH_COLLECTIONS_SUCCESS:
+      return _objectSpread({}, state, {
+        isFetching: false,
         collections: action.payload
+      });
+
+    case _shop["default"].FETCH_COLLECTIONS_FAILURE:
+      return _objectSpread({}, state, {
+        isFetching: false,
+        errorMessage: action.payload
       });
 
     default:

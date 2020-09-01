@@ -11,11 +11,13 @@ var _reduxPersist = require("redux-persist");
 
 var _reduxLogger = _interopRequireDefault(require("redux-logger"));
 
+var _reduxThunk = _interopRequireDefault(require("redux-thunk"));
+
 var _rootReducer = _interopRequireDefault(require("./root-reducer"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var middlewares = [];
+var middlewares = [_reduxThunk["default"]];
 
 if (process.env.NODE_ENV === 'development') {
   middlewares.push(_reduxLogger["default"]);
