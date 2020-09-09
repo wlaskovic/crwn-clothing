@@ -8,7 +8,7 @@ import {
   signOutSuccess,
   signOutFailure,
   signUpSuccess,
-  signUpFailure,
+  signUpFailure
 } from './user.actions';
 
 import {
@@ -69,19 +69,16 @@ export function* signOut() {
   }
 }
 
-export function* signUp({payload: { email, password, displayName }}) {
+export function* signUp({ payload: { email, password, displayName } }) {
   try {
-    const { user } = yield auth.createUserWithEmailAndPassword(
-      email, 
-      password
-    );
-    yield put(signUpSuccess({ user, additionalData: { displayName } }))
+    const { user } = yield auth.createUserWithEmailAndPassword(email, password);
+    yield put(signUpSuccess({ user, additionalData: { displayName } }));
   } catch (error) {
-    yield put(signUpFailure(error))
+    yield put(signUpFailure(error));
   }
 }
 
-export function* signInAfterSignUp({payload: { user, additionalData }}) {
+export function* signInAfterSignUp({ payload: { user, additionalData } }) {
   yield getSnapshotFromUserAuth(user, additionalData);
 }
 
@@ -102,11 +99,11 @@ export function* onSignOutStart() {
 }
 
 export function* onSignUpStart() {
-  yield takeLatest(UserActionTypes.SIGN_UP_START);
+  yield takeLatest(UserActionTypes.SIGN_UP_START, signUp);
 }
 
 export function* onSignUpSuccess() {
-  yield takeLatest(UserActionTypes.SIGN_UP_SUCCESS, signInAfterSignUp)
+  yield takeLatest(UserActionTypes.SIGN_UP_SUCCESS, signInAfterSignUp);
 }
 
 export function* userSagas() {
@@ -116,6 +113,6 @@ export function* userSagas() {
     call(onCheckUserSession),
     call(onSignOutStart),
     call(onSignUpStart),
-    call(onSignUpSuccess),
+    call(onSignUpSuccess)
   ]);
 }
